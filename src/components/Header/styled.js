@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 export const HeaderWrapper = styled.header`
   padding: 0 120px;
   background-color: ${({ theme }) => theme.colors.secondaryBlack};

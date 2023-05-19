@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 export const MainTitle = styled.h1`
   font-family: ${({ theme }) => theme.fonts.poppins}, sans-serif;
   font-weight: ${({ theme }) => theme.fontWeights.bold};

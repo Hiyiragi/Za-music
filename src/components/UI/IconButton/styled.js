@@ -1,4 +1,4 @@
-import { styled, css } from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledButton = styled.button`
   background: none;
@@ -9,7 +9,7 @@ export const StyledButton = styled.button`
   width: ${(props) => props.width || 20}px;
   height: ${(props) => props.height || 20}px;
   cursor: pointer;
-  transition: 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out, background-color 0.1s ease-in-out;
 
   ${(props) =>
     props.withBackground &&

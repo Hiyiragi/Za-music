@@ -1,18 +1,15 @@
-import { styled } from "styled-components";
+import { Hero, Genres } from "components/HomePage";
+import { ContentWrapper } from "./styled";
 
-const ContentWrapper = styled.main`
-  padding: 0 120px;
-`;
-
-function HomePage() {
+function Home() {
   return (
     <ContentWrapper>
-      <div>Hero</div>
-      <div>Genres</div>
+      <Hero />
+      <Genres />
       <div>Songs Table</div>
       <aside>Artists</aside>
     </ContentWrapper>
   );
 }
 
-export default HomePage;
+export default Home;
