@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Text } from "components/UI/Typography";
 
 export const Wrapper = styled.section`
   display: flex;
@@ -14,6 +15,11 @@ export const Wrapper = styled.section`
 export const TextWrapper = styled.div`
   padding-left: 123px;
 `;
+export const HeroText = styled(Text)`
+  max-width: 274px;
+  display: block;
+`;
+
 export const PlayButton = styled.button`
   background: none;
   border: none;
