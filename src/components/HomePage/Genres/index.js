@@ -1,7 +1,7 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
 // import required modules
 import { Pagination } from "swiper";
@@ -16,6 +16,7 @@ import {
 } from "./styled";
 import { ArrowLeft, ArrowRight } from "components/UI/Icons";
 import GenreCard from "./GenreCard";
+import { loadGenres } from "services/api";
 
 function Genres() {
   const [genres, setGenres] = useState();
@@ -36,10 +37,15 @@ function Genres() {
 
   useEffect(() => {
     const loadData = async () => {
-      setIsLoading(true);
-      const data = await axios.get("/genre");
-      setGenres(data.data.data.filter((genre) => genre.name.toLowerCase() !== "all"));
-      setIsLoading(false);
+      try {
+        setIsLoading(true);
+        const data = await loadGenres();
+        setGenres(data);
+      } catch (err) {
+        toast.error(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     loadData();
@@ -59,7 +65,7 @@ function Genres() {
       </TitleRow>
       <GenresWrapper>
         {isLoading &&
-          [1, 2, 3, 4, 5, 6].map((num) => (
+          [...Array(8).keys()].map((num) => (
             <Skeleton
               wrapper={GenreSkeletonWrapper}
               key={num}

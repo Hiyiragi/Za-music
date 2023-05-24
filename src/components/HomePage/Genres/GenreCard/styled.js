@@ -1,3 +1,4 @@
+import { SectionSubtitle } from "components/UI/Typography";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -22,5 +23,10 @@ export const Wrapper = styled.div`
     background-image: url(${(props) => props.backgroundImage});
     background-size: cover;
     background-position: center center;
+    color: ${({ theme }) => theme.colors.white};
   }
+`;
+
+export const GenreName = styled(SectionSubtitle)`
+  z-index: ${({ theme }) => theme.zIndex["10"]};
 `;

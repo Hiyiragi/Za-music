@@ -1,5 +1,6 @@
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ThemeProvider } from "styled-components";
+import { ToastContainer } from "react-toastify";
 import { theme } from "styles/Theme";
 import { GlobalStyles } from "styles/Global";
 
@@ -8,6 +9,8 @@ import Header from "components/Header";
 
 //import skeleton loader css
 import "react-loading-skeleton/dist/skeleton.css";
+//import react toastify css
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -16,6 +19,18 @@ function App() {
         <GlobalStyles />
         <Header />
         <Home />
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </SkeletonTheme>
     </ThemeProvider>
   );
