@@ -5,8 +5,6 @@ export const HeaderWrapper = styled.header`
   border-radius: 0px 0px 25px 25px;
   height: 118px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
 `;
 export const LogoWrapper = styled.div`
   display: flex;
