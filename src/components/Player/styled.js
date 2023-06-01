@@ -31,6 +31,7 @@ export const TrackInfoTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding-right: 15px;
 `;
 export const TrackTitle = styled(Text)`
   display: -webkit-box;
@@ -41,6 +42,11 @@ export const TrackTitle = styled(Text)`
 `;
 
 export const ArtistName = styled(SubText)`
+  display: -webkit-box;
+  overflow: hidden;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
   color: ${({ theme }) => theme.colors.secondaryGrey};
 `;
 
@@ -59,6 +65,7 @@ export const ProgressWrapper = styled.div`
 `;
 
 export const TrackTime = styled(SubText)`
+  width: 80px;
   color: ${(props) => (props.grey ? props.theme.colors.secondaryGrey : "inherit")};
 `;
 

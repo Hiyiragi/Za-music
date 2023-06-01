@@ -1,5 +1,8 @@
 import Slider from "rc-slider";
-import IconButton from "components/UI/IconButton/IconButton";
+import { useContext, useEffect, useRef, useState } from "react";
+import { PlayerContext, PlayerDispatchContext } from "context/playerContext";
+import { actions } from "context/actions";
+import IconButton from "components/UI/IconButton";
 import {
   TrackInfo,
   TrackInfoImage,
@@ -13,63 +16,82 @@ import {
   VolumeWrapper,
 } from "./styled";
 import { ContentWrapper } from "components/Layout";
-import { Pause, SkipLeft, SkipRight, Volume } from "components/UI/Icons";
+import { Pause, Play, SkipLeft, SkipRight, Volume } from "components/UI/Icons";
 import { theme } from "styles/Theme";
-
-const track = {
-  id: 2200304467,
-  title: "BESO",
-  title_short: "BESO",
-  title_version: "",
-  link: "https://www.deezer.com/track/2200304467",
-  duration: 194,
-  rank: 992823,
-  explicit_lyrics: false,
-  explicit_content_lyrics: 0,
-  explicit_content_cover: 0,
-  preview: "https://cdns-preview-e.dzcdn.net/stream/c-ebd87be7120b31b233c95136252307de-3.mp3",
-  md5_image: "47be3894ae3c7fb4d5e86167eed8cbcd",
-  position: 1,
-  artist: {
-    id: 554792,
-    name: "ROSALÍA",
-    link: "https://www.deezer.com/artist/554792",
-    picture: "https://api.deezer.com/artist/554792/image",
-    picture_small:
-      "https://e-cdns-images.dzcdn.net/images/artist/4b6e756d8c083bdccee45478fe479be2/56x56-000000-80-0-0.jpg",
-    picture_medium:
-      "https://e-cdns-images.dzcdn.net/images/artist/4b6e756d8c083bdccee45478fe479be2/250x250-000000-80-0-0.jpg",
-    picture_big:
-      "https://e-cdns-images.dzcdn.net/images/artist/4b6e756d8c083bdccee45478fe479be2/500x500-000000-80-0-0.jpg",
-    picture_xl:
-      "https://e-cdns-images.dzcdn.net/images/artist/4b6e756d8c083bdccee45478fe479be2/1000x1000-000000-80-0-0.jpg",
-    radio: true,
-    tracklist: "https://api.deezer.com/artist/554792/top?limit=50",
-    type: "artist",
-  },
-  album: {
-    id: 419715397,
-    title: "RR",
-    cover: "https://api.deezer.com/album/419715397/image",
-    cover_small:
-      "https://e-cdns-images.dzcdn.net/images/cover/47be3894ae3c7fb4d5e86167eed8cbcd/56x56-000000-80-0-0.jpg",
-    cover_medium:
-      "https://e-cdns-images.dzcdn.net/images/cover/47be3894ae3c7fb4d5e86167eed8cbcd/250x250-000000-80-0-0.jpg",
-    cover_big:
-      "https://e-cdns-images.dzcdn.net/images/cover/47be3894ae3c7fb4d5e86167eed8cbcd/500x500-000000-80-0-0.jpg",
-    cover_xl:
-      "https://e-cdns-images.dzcdn.net/images/cover/47be3894ae3c7fb4d5e86167eed8cbcd/1000x1000-000000-80-0-0.jpg",
-    md5_image: "47be3894ae3c7fb4d5e86167eed8cbcd",
-    tracklist: "https://api.deezer.com/album/419715397/tracks",
-    type: "album",
-  },
-  type: "track",
-};
+import { formatSecondstoMSS } from "utils/time";
 
 function Player() {
+  const dispatch = useContext(PlayerDispatchContext);
+  const audioRef = useRef(null);
+  const { track, isPlaying } = useContext(PlayerContext);
+  const [playerState, setPlayerState] = useState({
+    isPlaying: isPlaying,
+    currentTime: 0,
+    duration: 0,
+    volume: 0.3,
+  });
+
+  const togglePlay = () => dispatch({ type: actions.TOGGLEPLAY });
+
+  const toggleVolume = () => {
+    const newVolume = playerState.volume > 0 ? 0 : 1;
+    onVolumeChange(newVolume);
+  };
+
+  const onTimeUpdate = () => {
+    if (!audioRef?.current) return;
+    const currentTime = audioRef.current.currentTime;
+    const duration = audioRef.current.duration;
+    setPlayerState((prev) => ({
+      ...prev,
+      currentTime: currentTime,
+      duration: duration,
+    }));
+  };
+
+  const onTrackTimeDrag = (newTime) => {
+    if (!audioRef?.current) return;
+    audioRef.current.currentTime = newTime;
+    setPlayerState((prev) => ({
+      ...prev,
+      currentTime: newTime,
+    }));
+  };
+
+  const onVolumeChange = (newVolume) => {
+    if (!audioRef?.current) return;
+    audioRef.current.volume = newVolume;
+    setPlayerState((prev) => ({
+      ...prev,
+      volume: newVolume,
+    }));
+  };
+
+  const handleNextSong = () => dispatch({ type: actions.NEXT_SONG });
+  const handlePrevSong = () => dispatch({ type: actions.PREV_SONG });
+
+  useEffect(() => {
+    if (!audioRef?.current) return;
+    if (isPlaying) {
+      audioRef?.current?.play().catch((err) => console.log(err));
+    } else {
+      audioRef?.current?.pause();
+    }
+  }, [track, isPlaying, audioRef]);
+
+  if (!track) return null;
   return (
     <Wrapper>
-      <ContentWrapper display="flex">
+      <ContentWrapper display="flex" items="center">
+        <audio
+          ref={audioRef}
+          src={track.preview}
+          controls
+          onTimeUpdate={onTimeUpdate}
+          onLoadedMetadata={onTimeUpdate}
+          hidden
+          onEnded={handleNextSong}
+        />
         <TrackInfo>
           <TrackInfoImage src={track?.album.cover} alt={`${track?.album.title}'s cover`} />
           <TrackInfoTextWrapper>
@@ -78,19 +100,24 @@ function Player() {
           </TrackInfoTextWrapper>
         </TrackInfo>
         <ControlsWrapper>
-          <IconButton>
+          <IconButton onClick={handlePrevSong}>
             <SkipLeft />
           </IconButton>
-          <IconButton width={58} height={58} withBackground>
-            <Pause />
+          <IconButton width={58} height={58} withBackground onClick={togglePlay}>
+            {isPlaying ? <Pause /> : <Play />}
           </IconButton>
-          <IconButton>
+          <IconButton onClick={handleNextSong}>
             <SkipRight />
           </IconButton>
         </ControlsWrapper>
         <ProgressWrapper>
-          <TrackTime>0:00</TrackTime>
+          <TrackTime>{formatSecondstoMSS(playerState.currentTime)}</TrackTime>
           <Slider
+            onChange={onTrackTimeDrag}
+            step={0.2}
+            min={0}
+            max={playerState.duration}
+            value={playerState.currentTime}
             style={{
               padding: "3px 0",
             }}
@@ -101,13 +128,18 @@ function Player() {
             railStyle={{ height: "8px", backgroundColor: theme.colors.darkBlue }}
             handleStyle={{ border: "none", backgroundColor: theme.colors.white, marginTop: -2.7 }}
           />
-          <TrackTime grey>2:30</TrackTime>
+          <TrackTime grey>{formatSecondstoMSS(playerState.duration)}</TrackTime>
         </ProgressWrapper>
         <VolumeWrapper>
-          <IconButton width={24} height={24}>
+          <IconButton width={24} height={24} onClick={toggleVolume}>
             <Volume />
           </IconButton>
           <Slider
+            min={0}
+            max={1}
+            value={playerState.volume}
+            step={0.01}
+            onChange={onVolumeChange}
             style={{
               padding: "3px 0",
             }}

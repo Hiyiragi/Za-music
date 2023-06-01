@@ -1,7 +1,7 @@
 import { Logo, Search } from "components/UI/Icons";
 import { SectionSubtitle } from "components/UI/Typography";
 import { HeaderWrapper, LogoWrapper } from "./styled";
-import IconButton from "components/UI/IconButton/IconButton";
+import IconButton from "components/UI/IconButton";
 import { ContentWrapper } from "components/Layout";
 
 function Header() {

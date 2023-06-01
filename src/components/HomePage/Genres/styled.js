@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import IconButton from "components/UI/IconButton/IconButton";
+import IconButton from "components/UI/IconButton";
 
 export const Wrapper = styled.section`
   display: flex;

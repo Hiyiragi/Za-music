@@ -2,8 +2,12 @@ import React from "react";
 import { StyledButton } from "./styled";
 import PropTypes from "prop-types";
 
-function IconButton(props) {
-  return <StyledButton {...props}>{props.children}</StyledButton>;
+function IconButton({ withBackground, ...props }) {
+  return (
+    <StyledButton bg={withBackground ? 1 : 0} {...props}>
+      {props.children}
+    </StyledButton>
+  );
 }
 
 IconButton.propTypes = {

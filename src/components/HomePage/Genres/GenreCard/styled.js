@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url(${(props) => props.backgroundImage});
+    background-image: url(${(props) => props.image});
     background-size: cover;
     background-position: center center;
     color: ${({ theme }) => theme.colors.white};
