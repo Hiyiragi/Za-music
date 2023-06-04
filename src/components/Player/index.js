@@ -128,7 +128,7 @@ function Player() {
             railStyle={{ height: "8px", backgroundColor: theme.colors.darkBlue }}
             handleStyle={{ border: "none", backgroundColor: theme.colors.white, marginTop: -2.7 }}
           />
-          <TrackTime grey>{formatSecondstoMSS(playerState.duration)}</TrackTime>
+          <TrackTime grey={1}>{formatSecondstoMSS(playerState.duration)}</TrackTime>
         </ProgressWrapper>
         <VolumeWrapper>
           <IconButton width={24} height={24} onClick={toggleVolume}>

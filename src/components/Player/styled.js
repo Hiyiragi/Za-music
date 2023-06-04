@@ -1,8 +1,9 @@
+import { PLAYER_HEIGHT } from "common/constants";
 import { SubText, Text } from "components/UI/Typography";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  height: 105px;
+  height: ${PLAYER_HEIGHT}px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondaryBlack};
   border-radius: 25px 25px 0 0;
