@@ -8,7 +8,7 @@ const API_SEARCH_URL = "/search";
 
 const API_TOP_RADIO_TRACKS_URL = "/radio/37151/tracks";
 
-export const loadTopRadioTracks = async () => {
+export async function loadTopRadioTracks() {
   try {
     const data = await axios(`${API_TOP_RADIO_TRACKS_URL}?limit=100`);
     if (!data.data.data) throw Error();
@@ -16,9 +16,9 @@ export const loadTopRadioTracks = async () => {
   } catch (err) {
     throw Error("Failed to load radio!");
   }
-};
+}
 
-export const loadCharts = async () => {
+export async function loadCharts() {
   try {
     const data = await axios(API_CHART_URL);
     if (!data.data) throw Error();
@@ -26,9 +26,9 @@ export const loadCharts = async () => {
   } catch (err) {
     throw Error("Failed to load charts!");
   }
-};
+}
 
-export const loadGenres = async () => {
+export async function loadGenres() {
   try {
     const data = await axios(API_GENRE_URL);
     if (!data.data.data) throw Error();
@@ -36,9 +36,9 @@ export const loadGenres = async () => {
   } catch (err) {
     throw Error("Failed to load genres!");
   }
-};
+}
 
-export const search = async (searchQuery) => {
+export async function search(searchQuery) {
   try {
     const data = await axios(`${API_SEARCH_URL}?q=${searchQuery}`);
     if (!data.data.data) throw Error();
@@ -46,4 +46,4 @@ export const search = async (searchQuery) => {
   } catch (err) {
     throw Error("Failed to load tracks!");
   }
-};
+}

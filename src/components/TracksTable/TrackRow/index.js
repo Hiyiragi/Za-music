@@ -17,8 +17,9 @@ import {
 } from "./styled";
 import { SubText } from "components/UI/Typography";
 import Skeleton from "react-loading-skeleton";
+import { theme } from "styles/Theme";
 
-function TrackRow({ track, index, onClick, isPlaying }) {
+function TrackRow({ track, index, onClick, isPlaying, handleSaveTrackClick, isSaved }) {
   return (
     <StyledTableRow onClick={() => onClick(track)}>
       <TableData>
@@ -48,8 +49,15 @@ function TrackRow({ track, index, onClick, isPlaying }) {
       </TableData>
       <TableData>
         {track ? (
-          <StyledIconButton width={25} height={25}>
-            <Heart />
+          <StyledIconButton
+            width={25}
+            height={25}
+            onClick={(event) => {
+              handleSaveTrackClick(track.id);
+              event.stopPropagation();
+            }}
+          >
+            <Heart fill={isSaved ? theme.colors.white : "none"} />
           </StyledIconButton>
         ) : (
           <StyledIconButton width={25} height={25}>
@@ -78,6 +86,8 @@ TrackRow.propTypes = {
     }),
   }),
   index: PropTypes.number,
+  handleSaveTrackClick: PropTypes.func,
+  isSaved: PropTypes.bool,
 };
 
 export default TrackRow;

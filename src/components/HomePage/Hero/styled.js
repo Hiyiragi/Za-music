@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Text } from "components/UI/Typography";
+import Button from "components/UI/Button";
 
 export const Wrapper = styled.section`
   display: flex;
@@ -20,28 +21,8 @@ export const HeroText = styled(Text)`
   display: block;
 `;
 
-export const PlayButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-top: 52px;
-  padding: 18px 35px;
-  color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.primary};
-  box-shadow: 7px 23px 9px rgba(7, 21, 44, 0.02), 4px 13px 8px rgba(7, 21, 44, 0.05),
-    2px 6px 6px rgba(7, 21, 44, 0.09), 0px 1px 3px rgba(7, 21, 44, 0.11),
-    0px 0px 0px rgba(7, 21, 44, 0.11);
-  border-radius: 20px;
+export const PlayButton = styled(Button)`
   display: flex;
   gap: 14px;
   align-items: center;
-  transition: 0.1s ease-in-out;
-
-  &:hover {
-    opacity: 0.8;
-  }
-
-  &:disabled {
-    opacity: 0.6;
-  }
 `;

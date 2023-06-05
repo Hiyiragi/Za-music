@@ -12,6 +12,7 @@ function Hero({ tracks }) {
   const handlePlayClick = () => {
     dispatch({ type: actions.SET_TRACKS_DATA, track: tracks[0], tracks, isPlaying: true });
   };
+
   return (
     <Wrapper>
       <TextWrapper>
