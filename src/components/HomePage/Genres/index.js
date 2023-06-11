@@ -17,8 +17,12 @@ import {
 import { ArrowLeft, ArrowRight } from "components/UI/Icons";
 import GenreCard from "./GenreCard";
 import { loadGenres } from "services/api";
+import { Link } from "react-router-dom";
+import { useWindowSize } from "hooks/useWindowSize";
+import { breakpoints } from "styles/BreakPoints";
 
 function Genres() {
+  const { width, height } = useWindowSize();
   const [genres, setGenres] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +57,7 @@ function Genres() {
   return (
     <Wrapper>
       <TitleRow>
-        <SectionSubtitle>genres</SectionSubtitle>
+        <SectionSubtitle>Genres</SectionSubtitle>
         <ButtonsWrapper>
           <Button width={36} height={36} withBackground onClick={handlePrev}>
             <ArrowLeft />
@@ -69,16 +73,23 @@ function Genres() {
             <Skeleton
               wrapper={GenreSkeletonWrapper}
               key={num}
-              height={116}
-              width={220}
+              height={width < breakpoints.md ? 95 : 116}
+              width={width < breakpoints.md ? 137 : 220}
               borderRadius={25}
             />
           ))}
-        <Swiper slidesPerView="auto" spaceBetween={20} modules={[Pagination]} ref={sliderRef}>
+        <Swiper
+          slidesPerView="auto"
+          spaceBetween={width < breakpoints.md ? 9 : 20}
+          modules={[Pagination]}
+          ref={sliderRef}
+        >
           {!isLoading &&
             genres?.map((genre) => (
               <SwiperSlide key={genre.id} style={{ width: "auto" }}>
-                <GenreCard name={genre.name} backgroundImage={genre.picture_medium} />
+                <Link to={`/genres/${genre.id}`}>
+                  <GenreCard name={genre.name} backgroundImage={genre.picture_medium} />
+                </Link>
               </SwiperSlide>
             ))}
         </Swiper>

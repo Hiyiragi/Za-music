@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import IconButton from "components/UI/IconButton";
 import { SubText, Text } from "components/UI/Typography";
+import { device } from "styles/BreakPoints";
 
 export const StyledTableRow = styled.tr`
   &:hover {
@@ -39,18 +40,32 @@ export const TrackInfo = styled(TableData)`
   display: flex;
   gap: 25px;
   align-items: center;
+
+  ${device.md} {
+    gap: 10px;
+  }
 `;
 
 export const TrackInfoTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  ${device.md} {
+    gap: 2px;
+  }
 `;
 
 export const TrackInfoImage = styled.img`
   width: 65px;
   height: 65px;
   border-radius: 15px;
+
+  ${device.md} {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+  }
 `;
 
 export const TrackTitle = styled(Text)`
@@ -59,6 +74,11 @@ export const TrackTitle = styled(Text)`
   line-clamp: 1;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+
+  ${device.md} {
+    font-size: 18px;
+    line-height: 22px;
+  }
 `;
 
 export const TrackSubtext = styled(SubText)`
@@ -67,6 +87,11 @@ export const TrackSubtext = styled(SubText)`
   line-clamp: 1;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+
+  ${device.md} {
+    font-size: 16px;
+    line-height: 19px;
+  }
 `;
 
 export const SongNumber = styled(SubText)`

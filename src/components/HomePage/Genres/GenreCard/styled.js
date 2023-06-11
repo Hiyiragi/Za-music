@@ -1,5 +1,6 @@
 import { SectionSubtitle } from "components/UI/Typography";
 import styled from "styled-components";
+import { device } from "styles/BreakPoints";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -24,6 +25,11 @@ export const Wrapper = styled.div`
     background-size: cover;
     background-position: center center;
     color: ${({ theme }) => theme.colors.white};
+  }
+
+  ${device.md} {
+    width: 137px;
+    height: 95px;
   }
 `;
 
