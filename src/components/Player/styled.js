@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
 
-  ${device.md} {
+  ${device.lg} {
     height: ${MOBILE_PLAYER_HEIGHT}px;
   }
 `;
@@ -25,12 +25,25 @@ export const TrackInfo = styled.div`
   gap: 25px;
   align-items: center;
   min-width: 400px;
+
+  @media (max-width: 1400px) {
+    min-width: 280px;
+  }
+
+  ${device.lg} {
+    gap: 10px;
+  }
 `;
 
 export const TrackInfoImage = styled.img`
   width: 65px;
   height: 65px;
   border-radius: 15px;
+
+  ${device.lg} {
+    width: 45px;
+    height: 45px;
+  }
 `;
 
 export const TrackInfoTextWrapper = styled.div`
@@ -38,6 +51,10 @@ export const TrackInfoTextWrapper = styled.div`
   flex-direction: column;
   gap: 10px;
   padding-right: 15px;
+
+  ${device.lg} {
+    gap: 2px;
+  }
 `;
 export const TrackTitle = styled(Text)`
   display: -webkit-box;
@@ -68,11 +85,27 @@ export const ProgressWrapper = styled.div`
   align-items: center;
   margin-left: 60px;
   width: 100%;
+
+  ${device.lg} {
+    margin-left: 0px;
+  }
+`;
+
+export const MobileTrackWrapper = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `;
 
 export const TrackTime = styled(SubText)`
   width: 80px;
   color: ${(props) => (props.grey ? props.theme.colors.secondaryGrey : "inherit")};
+
+  ${device.lg} {
+    text-align: ${(props) => (props.last ? "right" : "inherit")};
+  }
 `;
 
 export const VolumeWrapper = styled.div`
@@ -81,4 +114,8 @@ export const VolumeWrapper = styled.div`
   align-items: center;
   margin-left: 133px;
   min-width: 190px;
+
+  ${device.xl} {
+    margin-left: 60px;
+  }
 `;
