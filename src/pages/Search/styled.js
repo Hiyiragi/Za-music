@@ -5,6 +5,10 @@ import { device } from "styles/BreakPoints";
 
 export const TableTitle = styled(SectionSubtitle)`
   margin-bottom: 30px;
+
+  ${device.lg} {
+    margin-bottom: 5px;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -16,12 +20,18 @@ export const Wrapper = styled.div`
 
   ${device.md} {
     padding-bottom: calc(${MOBILE_PLAYER_HEIGHT}px + 50px);
+    padding-top: 28px;
+    gap: 25px;
   }
 `;
 
 export const InputWrapper = styled.div`
   width: 70%;
   margin: 0 auto;
+
+  ${device.lg} {
+    width: 100%;
+  }
 `;
 
 export const SearchQuery = styled.input`

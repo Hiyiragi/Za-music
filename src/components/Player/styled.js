@@ -6,17 +6,21 @@ import { device } from "styles/BreakPoints";
 export const Wrapper = styled.div`
   height: ${PLAYER_HEIGHT}px;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.secondaryBlack};
+  background-color: ${({ theme, open }) =>
+    open ? theme.colors.black : theme.colors.secondaryBlack};
   border-radius: 25px 25px 0 0;
   position: fixed;
   bottom: 0;
   left: 0;
   z-index: ${({ theme }) => theme.zIndex["30"]};
   display: flex;
-  align-items: center;
+  align-items: ${(props) => (props.open ? "flex-start" : "center")};
 
   ${device.lg} {
-    height: ${MOBILE_PLAYER_HEIGHT}px;
+    height: ${(props) =>
+      props.open ? `calc(100vh - ${MOBILE_HEADER_HEIGHT}px)` : `${MOBILE_PLAYER_HEIGHT}px`};
+    border-top-right-radius: ${(props) => (props.open ? 0 : 25)}px;
+    border-top-left-radius: ${(props) => (props.open ? 0 : 25)}px;
   }
 `;
 
@@ -27,7 +31,7 @@ export const TrackInfo = styled.div`
   min-width: 400px;
 
   @media (max-width: 1400px) {
-    min-width: 280px;
+    min-width: 260px;
   }
 
   ${device.lg} {
@@ -40,10 +44,17 @@ export const TrackInfoImage = styled.img`
   height: 65px;
   border-radius: 15px;
 
-  ${device.lg} {
+  ${device.md} {
     width: 45px;
     height: 45px;
   }
+`;
+
+export const BigTrackImage = styled.img`
+  width: 311px;
+  height: 311px;
+  border-radius: 10px;
+  margin: 0 auto 37px;
 `;
 
 export const TrackInfoTextWrapper = styled.div`
@@ -77,6 +88,7 @@ export const ControlsWrapper = styled.div`
   display: flex;
   gap: 33px;
   align-items: center;
+  margin: ${(props) => (props.open ? "0 auto" : "0")};
 `;
 
 export const ProgressWrapper = styled.div`
@@ -87,7 +99,7 @@ export const ProgressWrapper = styled.div`
   width: 100%;
 
   ${device.lg} {
-    margin-left: 0px;
+    margin: ${(props) => (props.open ? "40px 0" : "0")};
   }
 `;
 
@@ -116,6 +128,21 @@ export const VolumeWrapper = styled.div`
   min-width: 190px;
 
   ${device.xl} {
-    margin-left: 60px;
+    margin: ${(props) => (props.open ? "48px auto 0" : "0 0 0 60px")};
+    width: ${(props) => (props.open ? "65%" : "auto")};
+  }
+`;
+
+export const BackButton = styled.button`
+  border: none;
+  background: none;
+  color: ${({ theme }) => theme.colors.lightGrey};
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  padding: 10px 0;
+  margin: 27px 0 30px;
+  &:hover {
+    cursor: pointer;
   }
 `;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "styles/BreakPoints";
 
 export const TableHead = styled.thead`
   width: 100%;
@@ -12,6 +13,10 @@ export const Table = styled.table`
 
 export const TableHeading = styled.th`
   padding: 55px 20px 30px ${(props) => (props.first ? "20px" : 0)};
+
+  ${device.md} {
+    padding: 35px 20px 30px ${(props) => (props.first ? "20px" : 0)};
+  }
 `;
 
 export const TableHeadingTime = styled(TableHeading)`
