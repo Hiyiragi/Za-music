@@ -35,7 +35,7 @@ export async function loadGenres() {
   try {
     const data = await axios(API_GENRE_URL);
     if (!data?.data?.data) throw Error();
-    return data.data.data.filter((genre) => genre.name.toLowerCase() !== ("all" || "todos"));
+    return data.data.data.filter((genre) => genre.name.toLowerCase() !== "all");
   } catch (err) {
     throw Error("Failed to load genres!");
   }

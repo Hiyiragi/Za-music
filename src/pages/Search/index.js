@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { InputWrapper, TableTitle, Wrapper, NotFoundText } from "./styled";
 import { toast } from "react-toastify";
 import Input from "components/UI/Input";
@@ -9,28 +9,13 @@ import TracksTable from "components/TracksTable";
 function Search() {
   //Add debounce
   const [searchQuery, SetSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [tracks, setTracks] = useState([]);
+
+  const [tracks, isLoading] = useDebounceLoadData(searchQuery);
+
   const handleInput = (event) => {
     SetSearchQuery(event.target.value);
   };
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setIsLoading(true);
-        const data = await search(searchQuery);
-        setTracks(data);
-      } catch (err) {
-        toast.error(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
-    if (searchQuery) {
-      loadData();
-    }
-  }, [searchQuery]);
   return (
     <Wrapper>
       <InputWrapper>
@@ -54,6 +39,38 @@ function Search() {
       )}
     </Wrapper>
   );
+}
+
+function useDebounceLoadData(searchQuery) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [data, setData] = useState();
+
+  const fetchRef = useRef();
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setIsLoading(true);
+        const searchData = await search(searchQuery);
+        setData(searchData);
+      } catch (err) {
+        toast.error(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (searchQuery) {
+      // clearTimeout(fetchRef.current);
+      fetchRef.current = setTimeout(loadData, 500);
+    } else {
+      setData(null);
+    }
+
+    return () => clearTimeout(fetchRef.current);
+  }, [searchQuery]);
+
+  return [data, isLoading];
 }
 
 export default Search;

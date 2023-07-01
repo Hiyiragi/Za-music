@@ -9,28 +9,13 @@ import "swiper/css/pagination";
 import { SectionTitle } from "components/UI/Typography";
 import { loadCharts, loadTopRadioTracks } from "services/api";
 import TracksTable from "components/TracksTable";
+import { useLoadData } from "hooks/useLoadData";
 
 function Home() {
-  const [chart, setChart] = useState();
-  const [radio, setRadio] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [data, isLoading] = useLoadData(() => Promise.all([loadCharts(), loadTopRadioTracks()]));
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setIsLoading(true);
-        const [chart, radio] = await Promise.all([loadCharts(), loadTopRadioTracks()]);
-        setChart(chart);
-        setRadio(radio);
-      } catch (err) {
-        toast.error(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const [chart, radio] = data || [];
 
-    loadData();
-  }, []);
   return (
     <main>
       <Hero tracks={radio} />

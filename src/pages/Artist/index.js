@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+
 import { loadArtist } from "services/api";
 import {
   SongsCountWrapper,
@@ -16,29 +15,15 @@ import TracksTable from "components/TracksTable";
 import Skeleton from "react-loading-skeleton";
 import { theme } from "styles/Theme";
 import { useWindowSize } from "hooks/useWindowSize";
-import { breakpoints, device } from "styles/BreakPoints";
+import { breakpoints } from "styles/BreakPoints";
+import { useLoadData } from "hooks/useLoadData";
 
 function Artist() {
   const { width } = useWindowSize();
   const { artistID } = useParams();
-  const [artist, setArtist] = useState();
-  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setIsLoading(true);
-        const artist = await loadArtist(artistID);
-        setArtist(artist);
-      } catch (err) {
-        toast.error(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const [artist, isLoading] = useLoadData(() => loadArtist(artistID));
 
-    loadData();
-  }, []);
   return (
     <Wrapper>
       <ArtistInfoWrapper>

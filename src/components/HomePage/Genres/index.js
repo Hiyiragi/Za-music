@@ -22,7 +22,7 @@ import { useWindowSize } from "hooks/useWindowSize";
 import { breakpoints } from "styles/BreakPoints";
 
 function Genres() {
-  const { width, height } = useWindowSize();
+  const { width } = useWindowSize();
   const [genres, setGenres] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -86,6 +86,7 @@ function Genres() {
         >
           {!isLoading &&
             genres?.map((genre) => (
+              //<GenreCard key ={genre.id} name={genre.name} />
               <SwiperSlide key={genre.id} style={{ width: "auto" }}>
                 <Link to={`/genres/${genre.id}`}>
                   <GenreCard name={genre.name} backgroundImage={genre.picture_medium} />
